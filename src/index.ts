@@ -195,5 +195,25 @@ class ScenaryScatching implements IScatch {
 const homeScatching: ScenaryScatching = new ScenaryScatching("home", "white", "4B");
 console.log(homeScatching);
 
+/**
+ * Type Aliases
+ */
+type TUser = {
+  id: number
+  name: string
+  authorization: string
+}
+
+const typedUser: TUser = {
+  id: 0,
+  name: "cuckoo",
+  authorization: "all"
+}
+
+console.log(typedUser);
+
+type someTypes = string | number | boolean;
+const text: someTypes = "str";
+
 // if it's not, error occur.
 export {};
