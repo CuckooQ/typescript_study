@@ -12,6 +12,15 @@ enum sortOrder {
   nameDesc,
   nameAsc,
 }
+// enum의 값이 변경될 수 있는 점을 개선한 constant 타입
+const SortOrder = {
+  idDesc: 0,
+  idAsc: 1,
+  nameDesc: 2,
+  nameAsc: 3,
+} as const;
+type SortOrder = typeof SortOrder[keyof typeof SortOrder];
+console.log(SortOrder);
 class Administrator {
   id: number = 0
   name: string = ""
