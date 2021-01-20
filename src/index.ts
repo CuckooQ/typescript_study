@@ -221,8 +221,109 @@ const typedUser: TUser = {
 
 console.log(typedUser);
 
-type someTypes = string | number | boolean;
-const text: someTypes = "str";
+type SomeTypes = string | number | boolean;
+const text: SomeTypes = "str";
+
+/**
+ * Generic
+ */
+// normal
+const getName = <T>(name: T) => name;
+function getId<T>(id: T) { return id; } 
+console.log(getName<string>("test"));
+console.log(getId<number>(0));
+
+interface Food<T> {
+  name: string,
+  taste: T
+}
+class Kimchi implements Food<string> {
+  name: string = "kimchi";
+  taste: string = "good";
+}
+class Oyster implements Food<number> {
+  name: string = "oyster";
+  taste: number = -9999999
+}
+
+// extends
+const getSong = <T extends string | number>(name: T) => name;
+getSong<string>("warriors");
+// getSong<boolean>(false); → error
+type U = string | number | boolean;
+type CsonditionType<T> = T extends U ? string : never; 
+interface SoccerTeam<T extends boolean> {
+  name: string,
+  score: number,
+  topPlayer: T extends true ? string : null 
+}
+class Tottenham implements SoccerTeam<true> {
+  name: string = "Tottenham Hotspur F.C";
+  score: number = 100;
+  topPlayer: string = "son";
+}
+
+// extends infer
+type InferableType<T> = T extends infer R ? R : null;
+const infered: InferableType <number> = 0;
+
+/**
+ * Class
+ */
+// Access Modifier
+class Access {
+  public name: string = "";
+  protected authorization: string = "";
+  private key: string = "";  
+  protected constructor (name: string) {
+    this.name = name;
+  }
+}
+class PrivateAccess extends Access {
+  name: string = "private";
+  authorization: string = "secret";
+  administrator: string = "cuckooQ";
+  // key: string = ""; → error
+  constructor(name: string){
+    super(name);
+  }
+}
+const descktopAcces: PrivateAccess = new PrivateAccess("desktop");
+console.log(descktopAcces.name);
+console.log(descktopAcces.authorization);
+console.log(descktopAcces.administrator);
+
+// Etc modifier
+class ExistStaticParam {
+  private static staticParam: string = "static";
+  public readonly score: number = 0;
+}
+const test: ExistStaticParam = new ExistStaticParam();
+console.log(test);
+
+// Abstract Class
+abstract class Dream {
+  abstract name: string;
+  time: number = 0;
+  abstract recall(): string;
+  awake = (motivation: boolean): boolean => motivation;
+}
+class BadDream extends Dream{
+  name: string = "falling";
+  recall = (): string => "ㅜㅜ";
+}
+const badDream: BadDream = new BadDream();
+console.log(badDream);
+console.log(badDream.recall());
+console.log(badDream.awake(false));
+
+/**
+ * Optional Keyword 
+ */ 
+const setTime = (datetime?: string): string => {
+  return datetime ? datetime : Date.now().toString();
+}
+console.log(setTime());
 
 // if it's not, error occur.
 export {};
